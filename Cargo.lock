@@ -28,8 +28,6 @@ name = "forge-queue"
 version = "0.1.0"
 dependencies = [
  "forge-core",
- "serde_json",
- "uuid",
 ]
 
 [[package]]
