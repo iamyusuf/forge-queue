@@ -4,10 +4,12 @@ use uuid::Uuid;
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum JobStatus {
     Pending,
-    Running,
+    Scheduled,
+    InProgress,
     Completed,
-    Failed,
+    Failed { reason: String },
     Canceled,
+    Dead,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
