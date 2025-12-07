@@ -1,5 +1,5 @@
 [workspace]
-members = ["forge-core"]
+members = ["forge-api","forge-core"]
 
 [package]
 name = "forge-queue"
