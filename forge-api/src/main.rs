@@ -1,33 +1,25 @@
 use axum::{
     Json, Router,
+    extract::Path,
     http::StatusCode,
     routing::{get, post},
 };
 
-use serde::Serialize;
+mod response;
+use response::{CreateJobResponse, JobStatusResponse};
 
 #[tokio::main]
 async fn main() {
     let app = Router::new()
         .route("/", get(|| async { "Hello, World!" }))
-        .route("/jobs", post(create_job));
-    // .route("/jobs/:id/status", get(job_status));
+        .route("/jobs", post(create_job))
+        .route("/jobs/{id}/status", get(job_status));
 
     let listener = tokio::net::TcpListener::bind("127.0.0.1:3000")
         .await
         .unwrap();
 
     axum::serve(listener, app).await.unwrap();
-}
-
-#[derive(Debug, Serialize)]
-struct CreateJobResponse {
-    id: String,
-    status: String,
-    queue_at: String,
-    delay_seconds: u32,
-    max_retries: u32,
-    priority: u32,
 }
 
 async fn create_job() -> (StatusCode, Json<CreateJobResponse>) {
@@ -43,8 +35,13 @@ async fn create_job() -> (StatusCode, Json<CreateJobResponse>) {
     (StatusCode::CREATED, Json(response))
 }
 
-#[allow(dead_code)]
-async fn job_status() {
-    // Implementation for getting job status
-    todo!("implement job status")
+async fn job_status(Path(id): Path<String>) -> (StatusCode, Json<JobStatusResponse>) {
+    let response = JobStatusResponse {
+        id,
+        status: "in_progress".to_string(),
+        started_at: Some("2023-01-01T00:10:00Z".to_string()),
+        completed_at: None,
+    };
+
+    (StatusCode::OK, Json(response))
 }
