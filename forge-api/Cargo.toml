@@ -1,15 +1,12 @@
-[workspace]
-members = ["forge-api","forge-core"]
-
 [package]
-name = "forge-queue"
+name = "forge-api"
 version = "0.1.0"
 edition = "2024"
 
-[workspace.dependencies]
+[dependencies]
+tokio = { version = "1", features = ["full"] }
+axum = "0.8.7"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 uuid = { version = "1.0", features = ["serde", "v4"] }
-
-[dependencies]
-forge-core = { path = "forge-core" }
+forge-core = { path = "../forge-core" }
