@@ -5,6 +5,7 @@ use axum::{Router, routing::{get, post}};
 mod handler;
 mod request;
 mod response;
+mod entity;
 
 use handler::job::{create_job, job_status};
 use sea_orm::{Database, DatabaseConnection};
