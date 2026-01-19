@@ -30,3 +30,9 @@ impl Job {
         }
     }
 }
+
+impl Default for Job {
+    fn default() -> Self {
+        Self::new()
+    }
+}
